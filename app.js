@@ -1,10 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const routesArticles = require("./routes/routesArticle");
+const routesUser = require("./routes/routesUser");
+
 const app = express();
 
 //connection avec la base de données
-mongoose.connect('mongodb+srv://FV_seo:Frankyvan95@cluster0.oymoqnv.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://FV_seo:Frankyvan95@cluster0.6o7rqq9.mongodb.net/?retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -21,8 +24,8 @@ app.use((req, res, next) => {
     next();
   });
 
-app.get("/api/test", (req, res) => {
-    res.json({message: "votre message est reçu avec test"})
-})
+  app.use("/api", routesArticles);
+  app.use("/api/auth", routesUser)
+
 
 module.exports = app;
