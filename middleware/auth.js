@@ -9,5 +9,7 @@ module.exports = (req, res, next) => {
         };
         next()
     }
-    catch(error ) {res.status(401).jsaon({error})}
+    catch(error ) {
+        res.status(401).json({error})
+    }
 }

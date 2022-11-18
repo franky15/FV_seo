@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
 const articleSchema = mongoose.Schema({
+    userId: {type: String, required: true},
+    imageUrl: {type: String, required: true},
     title: {type: String, required: true},
     article: {type: String, required: true},
+    author: {type: String, required: true},
+    date: {type: Number, required: true},
     reviews: {type: String},
     ranks: {type: Number},
     likes: {type: Number},

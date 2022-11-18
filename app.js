@@ -1,13 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const routesArticles = require("./routes/routesArticle");
-const routesUser = require("./routes/routesUser");
+
+
+
+const routerArticles = require("./routes/routesArticle");
+const routerUser = require("./routes/routesUser");
+const path = require('path');
 
 const app = express();
 
+//importation du package pour les variables d'environnement
+const dotenv = require("dotenv");
+const result = dotenv.config();
+
 //connection avec la base de données
-mongoose.connect('mongodb+srv://FV_seo:Frankyvan95@cluster0.6o7rqq9.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect( `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.6o7rqq9.mongodb.net/?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -24,8 +32,8 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.use("/api", routesArticles);
-  app.use("/api/auth", routesUser)
+  app.use("/api", routerArticles);
+  app.use("/api/auth", routerUser)
 
 
 module.exports = app;
