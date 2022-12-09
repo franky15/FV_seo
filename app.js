@@ -1,25 +1,17 @@
 const express = require("express");
-const mongoose = require("mongoose");
+//const mongoose = require("mongoose");
 
-
-
+//importation du package pour les variables d'environnement
+const dotenv = require("dotenv").config();
 
 const routerArticles = require("./routes/routesArticle");
 const routerUser = require("./routes/routesUser");
+
+//permet de lier multer avec le server
 const path = require('path');
 
+//creation de l'app avec express
 const app = express();
-
-//importation du package pour les variables d'environnement
-const dotenv = require("dotenv");
-const result = dotenv.config();
-
-//connection avec la base de données
-mongoose.connect( `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.6o7rqq9.mongodb.net/?retryWrites=true&w=majority`,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 //permet de capter toutes les requêtes qui contiennent du json dans le but d'y avoir accès 
 app.use(express.json())
@@ -32,8 +24,9 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.use("/api", routerArticles);
-  app.use("/api/auth", routerUser)
-
+  app.use("/api/auth", routerUser); 
+  app.use("/api", routerArticles); //router articles, commentaire, likes dislikes
+  app.use('/images', express.static(path.join(__dirname, 'images')));
+  
 
 module.exports = app;
